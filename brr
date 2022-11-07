@@ -1,0 +1,167 @@
+const express=require('express');
+const app=express();
+
+const mongoose = require('mongoose');
+var bodyParser = require('body-parser')
+
+const annonceController = require('./controllers/annonce.controllers.js');
+
+const  swaggerjsDoc  =  require ( 'swagger-jsdoc' ) ; 
+const  swaggerUi  =  require ( 'swagger-ui-express' ) ; 
+// const  nanoid  = require('nanoid');
+
+const swaggerOptions={
+	definition: {
+		openapi: "3.0.0",
+		info: {
+			title: "Library API",
+			version: "1.0.0",
+			description: "A simple Express Library API",
+		},
+		servers: [
+			{
+				url: "http://localhost:3000",
+			},
+		],
+	},
+	apis: ["app.js"],
+};
+
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+// configure the app to use bodyParser()
+app.use(bodyParser.json());
+const swaggerDoc=swaggerjsDoc(swaggerOptions);
+console.log(swaggerDoc);
+
+app.use("/api",swaggerUi.serve,swaggerUi.setup(swaggerDoc));
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Book:
+ *       type: object
+ *       required:
+ *         - title
+ *         - author
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The auto-generated id of the book
+ *         title:
+ *           type: string
+ *           description: The book title
+ *         author:
+ *           type: string
+ *           description: The book author
+ *       example:
+ *         id: d5fE_asz
+ *         title: The New Turing Omnibus
+ *         author: Alexander K. Dewdney
+ */
+
+
+ /**
+  * @swagger
+  * tags:
+  *   name: Annonce
+  *   description: The Annonce managing API
+  */
+
+/**
+ * @swagger
+ * /annonces:
+ *  get:
+ *   description: get all Annonce
+ *   tags: [Annonce]
+ *   responses:
+ *    200:
+ *     description: success
+ */
+ app.get('/annonces', annonceController.readAnnonce);
+
+
+
+ /**
+ * @swagger
+ * /book:
+ *  post:
+ *   summary: create book
+ *   description: create book
+ *   parameters:
+ *    - name: title
+ *      in: formData
+ *      required: true
+ *      description: title of the book
+ *    - name: title2
+ *      in: formData
+ *      required: true
+ *      description: title 2of the book
+ *   responses:
+ *    201:
+ *     description: success
+ */
+  app.post("/book",(req,res)=>{
+    res.status(201).send();
+  })
+
+/**
+ * @swagger
+ * /create:
+ *   post:
+ *     summary: Create a new book
+ *     tags: [Annonce]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Book'
+ *     responses:
+ *       200:
+ *         description: The book was successfully created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Book'
+ *       500:
+ *         description: Some server error
+ */
+app.post('/create', annonceController.createAnnonce);
+
+
+ app.post('/create2', annonceController.createAnnonce);
+ 
+ 
+  /**
+ * @swagger
+ * /book:
+ *  post:
+ *   security:
+ *    - bearerAuth: []
+ *   summary: create book
+ *   description: create book
+ *   parameters:
+ *    - name: title
+ *      in: formData
+ *      required: true
+ *      description: title of the book
+ *    - name: title2
+ *      in: formData
+ *      required: true
+ *      description: title 2of the book
+ *   responses:
+ *    201:
+ *     description: success
+ */
+  router.post("/book",(req,res)=>{
+    res.status(201).send();
+  })
+
+
+
+
+mongoose.connect('mongodb://localhost/weptp1');
+app.listen(3000,()=>console.log("le sever tourner sur port 3000"));
