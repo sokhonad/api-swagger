@@ -6,11 +6,17 @@ const bodyParser = require('body-parser')
 
 const annonceRouter = require('./routes/annonce');
 
-const annonceController = require('./controllers/annonce.controllers.js');
+const { resolvers } = require("./resolvers");
+const { typeDefs } = require("./typeDefs");
+
 
 const  swaggerjsDoc  =  require ( 'swagger-jsdoc' ) ; 
 const  swaggerUi  =  require ( 'swagger-ui-express' ) ; 
-// const  nanoid  = require('nanoid');
+
+const { ApolloServer, gql } =require("apollo-server-express");
+const {
+	ApolloServerPluginLandingPageGraphQLPlayground
+  }  =require("apollo-server-core");
 
 const swaggerOptions={
 	definition: {
@@ -50,6 +56,24 @@ app.use("/api",swaggerUi.serve,swaggerUi.setup(swaggerDoc));
 
 
 
-
-mongoose.connect('mongodb://localhost/weptp1');
-app.listen(3000,()=>console.log("le sever tourner sur port 3000"));
+  const startServer = async () => {
+	const server = new ApolloServer({
+	  typeDefs,
+	  resolvers,
+	  plugins: [
+		ApolloServerPluginLandingPageGraphQLPlayground(),
+	  ],
+	});
+	await server.start();
+	server.applyMiddleware({ app });
+  
+	await mongoose.connect("mongodb://localhost/grapqlcat", {
+	  useNewUrlParser: true
+	});
+  
+	app.listen({ port: 3000 }, () =>
+	  console.log(`🚀 Server ready at http://localhost:3000${server.graphqlPath}`)
+	);
+  };
+  
+  startServer();

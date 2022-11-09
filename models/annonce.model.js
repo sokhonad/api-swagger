@@ -2,10 +2,7 @@ const mongoose = require('mongoose');
 
 const annonce = new mongoose.Schema(
   {
-    postId: {
-      type: String,
-      required: false
-    },
+
     titre : {
       type : String,
       required :[true, ' is required \n'],
@@ -39,21 +36,21 @@ const annonce = new mongoose.Schema(
       photos: {
       type: String,
       required: false,
-    },
-    comments: {
-      type: [
-        {
-          commenterId:String,
-          commenterPseudo: String,
-          text: String,
-          timestamp: Number,
-        }
-      ],
-      required: false,
-    },
-  },
-  {
-    timestamps: Number,
+    }
+  //   comments: {
+  //     type: [
+  //       {
+  //         commenterId:String,
+  //         commenterPseudo: String,
+  //         text: String,
+  //         timestamp: Number,
+  //       }
+  //     ],
+  //     required: false,
+  //   },
+  // },
+  // {
+  //   timestamps: Number,
   }
 );
 

@@ -1,0 +1,62 @@
+mutation{
+  createAnnonce(
+    titre:"test230"
+    type: "String"
+    statusPublication: "String"
+      statusBien: "String"
+      prix: 230
+      dateDisponibilite: "String"
+      description: "String"
+      photos: "String"
+  ){
+    id
+    titre
+    prix
+  }
+}
+
+
+query{
+  annonces{
+    		id
+        titre ,
+        type,
+        statusPublication,
+        statusBien,
+        prix,
+        dateDisponibilite,
+        description,
+        photos 
+  }
+}
+
+query{
+  getAnnonce(id:"636c115ead2450d14ee94daf"){
+    		id
+        titre ,
+        type,
+        statusPublication,
+        statusBien,
+        prix,
+        dateDisponibilite,
+        description,
+        photos 
+  }
+}
+
+mutation{
+  updateAnnonce(ID:"636c12b7918b36185fa4d35d"
+    titre:"vvvvvvvvvv"
+    type: "String"
+    statusPublication: "String"
+      statusBien: "String"
+      prix: 230
+      dateDisponibilite: "WWWWWW"
+      description: "WWWW"
+      photos: "WWWW"
+  ){
+    id
+    titre
+    prix
+  }
+}

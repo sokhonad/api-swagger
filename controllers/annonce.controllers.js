@@ -79,7 +79,6 @@ module.exports.createAnnonce = async (req, res) => {
 
   module.exports.update_Annonce = (req, res) => {
     const image = "images";
-    console.log("kaaaaaaaakakaka");
     if (!ObjectID.isValid(req.params.id))
       return res.status(400).send("ID unknown : " + req.params.id);
   
